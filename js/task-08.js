@@ -7,15 +7,16 @@ function onSubmit(event) {
 
   const { email, password } = inputEl.elements;
   const data = {
-    email: email.value,
-    password: password.value,
+    email: email.value.trim(),
+    password: password.value.trim(),
   };
-  console.log(data);
 
   if (data.email === "" || data.password === "") {
     alert("All fields must be filled.");
     return;
   }
+
+  console.log(data);
 
   document.querySelector(".login-form").reset();
 }

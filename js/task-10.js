@@ -12,19 +12,30 @@ const boxesContainer = document.getElementById("boxes");
 createButton.addEventListener("click", () => createBoxes(amountInput.value));
 
 function createBoxes(amount) {
+  const limitMin = amountInput.min;
+  const limitMax = amountInput.max;
+  const step = parseInt(amountInput.step);
   let size = 30;
-  for (let i = 0; i < amount; i++) {
-    const container = document.createElement("div");
-    boxesContainer.append(container);
-    boxesContainer.firstChild.style.height = `${size}px`;
-    boxesContainer.firstChild.style.width = `${size}px`;
-    boxesContainer.style.backgroundColor = getRandomHexColor();
-    size += 10;
+  const containers = [];
+
+  if (amount < Number(limitMin) || amount > Number(limitMax)) {
+    alert("The value is not in the available range!");
+  } else {
+    for (let i = 0; i < amount; i += step) {
+      const container = document.createElement("div");
+      container.style.height = `${size}px`;
+      container.style.width = `${size}px`;
+      container.style.backgroundColor = getRandomHexColor();
+      containers.push(container);
+      size += 10;
+    }
+
+    containers.map((container) => boxesContainer.append(container));
   }
 }
 
 destroyButton.addEventListener("click", () => destroyBoxes(boxesContainer));
 
 function destroyBoxes(container) {
-  container.innerHTML = null;
+  container.innerHTML = "";
 }
